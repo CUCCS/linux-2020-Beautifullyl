@@ -110,9 +110,8 @@ mv custom.iso ../
 
 get custom.iso [本机地址]
 #### 新建虚拟机，设置光驱为custom.iso，启动虚拟机，实现自动安装
-自动安装视频已上传b站，还在审核。
 
-[个人主页链接](https://space.bilibili.com/32520022)
+[无人值守自动安装录屏](https://www.bilibili.com/video/BV1FE411c7ob)
 
 ## 如何使用sftp在虚拟机和宿主机之间传输文件？
 ### 1.查看ssh服务是否安装，若否，安装ssh服务
