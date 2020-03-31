@@ -94,4 +94,3 @@ sudo apt-get install asciinema
 [Vim的分屏功能命令大全](https://www.jb51.net/article/96585.htm)
 
 vimtutor
-
