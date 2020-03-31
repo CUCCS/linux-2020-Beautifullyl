@@ -5,7 +5,6 @@ Ubuntu 18.04 Server 64bit
 ### 1.在asciinema注册一个账号，并在本地安装配置好asciinema
 * 使用putty链接虚拟机，在putty上进行操作
 
-![putty登陆](/img/putty登陆.jpg)
 * 根据[官方提供安装方法](https://asciinema.org/docs/installation),输入以下代码：
   
 ```
