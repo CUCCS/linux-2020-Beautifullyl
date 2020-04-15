@@ -73,3 +73,12 @@ root权限下： `fdisk -l`
 修改配置文件，restart字段设为`always`，保存。
 
 ## 参考文献
+[Linux下如何让普通用户具备sudo执行权限（普通用户提权）](https://blog.csdn.net/u012206617/article/details/100082021)
+
+[Linux添加、创建新用户](https://www.cnblogs.com/zhyantao/p/10582839.html)
+
+[在Virtualbox下为Ubuntu16.04开机自动挂载共享目录的最佳方法](https://www.jb51.net/article/170330.htm)
+
+[LVM : 扩展文件系统的容量](https://www.cnblogs.com/sparkdev/p/10142629.html)
+
+[LVM : 缩减文件系统的容量](https://www.cnblogs.com/sparkdev/p/10213655.html)
