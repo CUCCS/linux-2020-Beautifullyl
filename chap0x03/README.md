@@ -42,7 +42,7 @@ putty
 
 如何查看当前系统的分区表和文件系统详细信息？
 
-root权限下： `fdisk -l`
+root权限下： `fdisk -l` `df -lh`.
 
 如何实现开机自动挂载Virtualbox的共享目录分区？
 + Virtualbox ubuntu设置-共享文件夹-添加共享目录
@@ -64,17 +64,30 @@ root权限下： `fdisk -l`
 
 修改网络连接配置文件systemd-networkd的[Service]部分
 
-`ExecStartPost=指定脚本`
+`ExecStartPost=指定脚本 start`
 
-`ExecStopPost=另一个脚本`
+`ExecStopPost=另一个脚本 start`
 
 如何通过systemd设置实现一个脚本在任何情况下被杀死之后会立即重新启动？实现杀不死？
 
 `sudo systemctl vi +脚本文件名`
 
 修改配置文件，restart字段设为`always`，保存。
+## 出现问题
++ ![查看某个路径的脚本的日志](img/查看某个路径的脚本的日志.png)
+  显示不能规范化路径，但是该路径通过查看是存在的，没有找到原因
++ ![显示某个 Unit 服务是否建立了启动链接](img/显示某个%20Unit%20服务是否建立了启动链接.png)
+  没有application这一个Unit
++ ![重新加载一个服务的配置文件](img/重新加载一个服务的配置文件.png)
+  reload不适用于这个配置文件
++ ![关闭前一个 Target 里面所有不属于后一个 Target 的进程](img/关闭前一个%20Target%20里面所有不属于后一个%20Target%20的进程.png)
+  这个target不能人为关闭，仅受依赖项请求。
 
 ## 参考文献
+[Systemd 入门教程：命令篇 by 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html)
+
+[Systemd 入门教程：实战篇 by 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html)
+
 [Linux下如何让普通用户具备sudo执行权限（普通用户提权）](https://blog.csdn.net/u012206617/article/details/100082021)
 
 [Linux添加、创建新用户](https://www.cnblogs.com/zhyantao/p/10582839.html)
