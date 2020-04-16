@@ -55,8 +55,10 @@ root权限下： `fdisk -l`
 基于LVM（逻辑分卷管理）的分区如何实现动态扩容和缩减容量？
 
  root权限下：
-* 动态扩容：` lvextend -L +容量+磁盘`
-* 缩减容量：`lvreduce -L +容量+磁盘`
+* 动态扩容：
+  + 逻辑卷LV扩容:` lvextend -L +容量+磁盘`;
+  + 文件系统扩容:ext4文件系统扩容使用`resize2fs [逻辑卷名称]`，xfs文件系统扩容使用`xfs_growfs 挂载点"`
+* 缩减容量：`lvreduce -L -r +容量+磁盘`
 
 如何通过systemd设置实现在网络连通时运行一个指定脚本，在网络断开时运行另一个脚本？
 
@@ -64,11 +66,11 @@ root权限下： `fdisk -l`
 
 `ExecStartPost=指定脚本`
 
-`ExecStop=另一个脚本`
+`ExecStopPost=另一个脚本`
 
 如何通过systemd设置实现一个脚本在任何情况下被杀死之后会立即重新启动？实现杀不死？
 
-`systemctl vi +脚本文件名`
+`sudo systemctl vi +脚本文件名`
 
 修改配置文件，restart字段设为`always`，保存。
 
@@ -79,6 +81,4 @@ root权限下： `fdisk -l`
 
 [在Virtualbox下为Ubuntu16.04开机自动挂载共享目录的最佳方法](https://www.jb51.net/article/170330.htm)
 
-[LVM : 扩展文件系统的容量](https://www.cnblogs.com/sparkdev/p/10142629.html)
-
-[LVM : 缩减文件系统的容量](https://www.cnblogs.com/sparkdev/p/10213655.html)
+[LVM管理](https://www.cnblogs.com/diantong/p/10554831.html)
