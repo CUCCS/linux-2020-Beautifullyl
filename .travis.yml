@@ -5,10 +5,9 @@ before_install:
 
 script:
  - ls -l
- - bash test.sh
+ - bash ImageProcess.sh
  - ls -l
  - pwd
- - cat file
 
 notifications:
   email:
