@@ -48,7 +48,7 @@ function resize {
            echo $file
            echo "resizing.......";
 	   #改变分辨率语句
-           convert -resize $size"x"$size $file $out
+           convert -sample $size"%x"$size"%" $file $out
            fi
          done
  }
