@@ -32,7 +32,7 @@ function compress {
 	     #在当前目录创建输出图片文件
 	     out=$dir/compress_$file
 	     #压缩语句
-	     convert -quality $quality $file $out
+	     convert -quality $quality"%" $file $out
 	  fi
 	 done
 }
@@ -64,7 +64,6 @@ function add_text {
 	for file in `ls $dir`
 	do
           extension=${file##*.}
-	  echo $file
           if [[ $extension == "jpg" ]] || [[ $extension == "png" ]] || [[ $extension == "svg" ]];then
 	  echo $file
 	  echo "drawing";
@@ -98,7 +97,6 @@ function rename {
         for file in `ls $dir`
 	do
           extension=${file##*.}
-	  echo $file
           if [[ $extension == "jpg" ]] || [[ $extension == "png" ]] || [[ $extension == "svg" ]];then
           echo $file
 	  out=$dir/$new_name.${file##*.}
