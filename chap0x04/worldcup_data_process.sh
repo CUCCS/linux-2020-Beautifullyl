@@ -1,5 +1,6 @@
 #!usr/bin/env bash
 
+#当前目录
 dir=`pwd`
 #统计不同年龄区间的球员数量和百分比
 function num_by_age {
@@ -8,6 +9,8 @@ function num_by_age {
 	count_between=0
 	count30=0
 	i=0
+        #此处数组加引号使遇到元素中的空格不换行
+	#遍历年龄数组，判断年龄段，并计数
 	for i in "${age[@]}";do
 	  if [[ $i -lt 20 ]]
 	  then
@@ -19,21 +22,27 @@ function num_by_age {
           ((count30++))
           fi
 	done
-	printf "20岁以下的球员有%-5d个，占比%-10.6f%% \n" $count20 $(echo "scale=10; $count20/$count*100" | bc -l| awk '{printf "%f", $0}') 
+	#打印结果
+	#bash不支持浮点运算，需要借助bc awk处理
+	printf "20岁以下的球员有%-5d个，占比%-10.6f%% \n" $count20 $(echo "scale=10;$count20/$count*100" |bc -l | awk '{printf "%f",$0}')
+	#scale表示小数精度，bc输出只有小数点后数字，将结果代入awk处理，输出浮点数
         printf "20-30岁的球员有%-5d个，占比%-10.6f%% \n" $count_between $(echo "scale=10;$count_between/$count*100" |bc -l | awk '{printf "%f",$0}')
         printf "30岁以上的球员有%-5d个，占比%-10.6f%% \n" $count30 $(echo "scale=10;$count30/$count*100" |bc -l | awk '{printf "%f",$0}')
  }
 
 #计算不同场上位置的球员数量和百分比
 function num_by_position {
+	#vRs的意义，数组赋值，array是去掉position不必要的空格等
 	array=($(awk -vRS=' ' '!a[$1]++' <<< "${position[@]}"))
 	i=0
+	#声明member数组，position为指数，元素为人数，初始化为0
 	declare -A member
 	for((i=0;i<${#array[@]};i++))
 	{
 		m=${array[$i]}
 		member["$m"]=0
 	}
+	#遍历position数组，计数
 	for each in "${position[@]}";do
 	   case $each in
 		   ${array[0]})
@@ -60,11 +69,15 @@ function num_by_position {
 #统计名字最长和最短的球员
 function name_by_namelen {
 	i=0
+	#名字最长和最短的长度
 	max_name=0
 	min_name=0
+	#找出名字最长和最短的球员序号
 	while [[ i -lt $count ]]
 	do
+	  #去掉字符串中所有*
 	  name=${player[$i]//\*/}
+	  #name的长度
 	  n=${#name}
 	  if [[ n -gt max_name ]];then
 		  max_name=$n
@@ -82,9 +95,11 @@ function name_by_namelen {
 
 #统计年龄最大和最小的球员
 function name_by_age {
+	#最大和最小年龄的球员年龄
 	oldest=0
 	youngest=100
 	i=0
+        #找到最小和最大年龄球员的序号
 	while [[ i -lt $count ]]
 	do
 		a=age[$i]
@@ -102,11 +117,15 @@ function name_by_age {
 }
 
 #主程序入口
+
+#计数器
 count=0
+#以行读取文件
 while read line
 do
 ((count++))
 if [[ $count -gt 1 ]];then
+	#字符串转化为数组,以空格作为分隔
 	str=(${line// /*})
 	position[$(($count-2))]=${str[4]}
 	age[$(($count-2))]=${str[5]}
