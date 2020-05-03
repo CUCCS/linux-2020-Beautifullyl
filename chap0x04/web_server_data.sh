@@ -1,6 +1,6 @@
 #!usr/bin/env bash
 
-#shenme
+#sha
 echo "统计访问来源主机TOP 5和分别对应出现的总次数"
 cat web_log.tsv|awk -F'\t' '{print $1}'|sort|uniq -c|sort -nr|head -n 5
 echo "统计访问来源主机TOP 5 IP和分别对应出现的总次数"
