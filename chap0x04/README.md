@@ -37,6 +37,7 @@ convert -fill color -pointsize size -font char -draw 'text x,y "textwrite" ' xxx
   
 `convert test.png test.jpg`
 ### 实验结果
+#### 处理过的图片processed_images文件夹与脚本文件Image_process.sh已上传
 原始情况
 ![原始情况](img/原始情况.png)
 #### 运行脚本及其结果：
@@ -64,12 +65,16 @@ convert -fill color -pointsize size -font char -draw 'text x,y "textwrite" ' xxx
 `bash ImageProcess.sh -n 2020 #批量重命名为2020`
 
 ![批量重命名](img/批量重命名.png)
+
 ***
 ## 任务二：用bash编写一个文本批处理脚本，对以下附件分别进行批量处理完成相应的数据统计任务： 
 * 统计不同年龄区间范围（20岁以下、[20-30]、30岁以上）的球员数量、百分比
 * 统计不同场上位置的球员数量、百分比
 * 名字最长的球员是谁？名字最短的球员是谁？
 * 年龄最大的球员是谁？年龄最小的球员是谁？
+### 实验结果
+#### tsv文件worldcupplayerinfo.tsv及脚本文件worldcup_data_process.sh，已上传
+![世界杯结果](img/世界杯结果.png)
 ***
 ## 任务二：用bash编写一个文本批处理脚本，对以下附件分别进行批量处理完成相应的数据统计任务： 
 * 统计访问来源主机TOP 100和分别对应出现的总次数
@@ -77,12 +82,29 @@ convert -fill color -pointsize size -font char -draw 'text x,y "textwrite" ' xxx
 * 统计最频繁被访问的URL TOP 100
 * 统计不同响应状态码的出现次数和对应百分比
 * 分别统计不同4XX状态码对应的TOP 10 URL和对应出现的总次数
-* 给定URL输出TOP 100访问来源主机  
+* 给定URL输出TOP 100访问来源主机 
+### 实验结果
+### 脚本文件web_server_data.sh及结果保存到txt文件web_cal_data.txt中，已上传
 ***
+## 出现问题
+* web_log.tsv文件超过100MB，上传不了，使用lfs一直出错
+
+    ![lfs出错](img/lfs出错.png)
+
+     没找到原因
 ## 参考文献
 [linux-2019-Jasmine2020](https://github.com/CUCCS/linux-2019-Jasmine2020/blob/linux4/Lab4_Shell编程/lab4%20shell编程.md)
+
 [Bash 中的特殊字符大全](https://linux.cn/article-5657-1.html)
+
 [Shell表达式，如${file##*/}](https://www.cnblogs.com/-tbd-/p/12055351.html)
+
 [ubuntu convert 命令](https://blog.csdn.net/HUXINY/article/details/87879249)
+
 [玩转Bash脚本：选择结构之case](https://www.cnblogs.com/unclejelly/p/4082049.html)
+
 [Linux shell脚本中shift的用法说明](https://blog.csdn.net/zhu_xun/article/details/24796235?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2)
+
+[Linux awk+uniq+sort 统计文件中某字符串出现次数并排序](https://www.cnblogs.com/wangbaihan/p/9262296.html)
+
+[grep结合awk简单用法](https://www.cnblogs.com/lcj0703/p/6434653.html)
