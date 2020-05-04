@@ -1,5 +1,5 @@
 #!usr/bin/env bash
-#
+
 #有一个参数，是指定IP
 echo "处理中。。。。。。"
 printf "统计访问来源主机TOP 100和分别对应出现的总次数" > web_cal_data.txt
@@ -25,5 +25,18 @@ cat web_log.tsv|awk -F'\t' '{if($6=="404")print $5,$6}'|sort|uniq -c|sort -nr|he
 printf "给定URL输出TOP 100访问来源主机">> web_cal_data.txt
 #url参数
 url=$1
-cat web_log.tsv|awk -F'\t' '{if($5=="'$url'")print $1,$5}'|sort|uniq -c|sort -nr|head -n 100 >> web_cal_data.txt
+if [ url = "-h"|| url = "-help" ]
+	echo '-------------------------------------------'
+        echo '-- 本脚本用于统计 web_log.tsv 中以下数据 --'
+	echo '-------------------------------------------'
+        echo '-h/-help 输出帮助文档'
+	echo '统计访问来源主机TOP 100和分别对应出现的总次数'
+        echo '统计访问来源主机TOP 100 IP和分别对应出现的总次数'
+	echo '统计最频繁被访问的URL TOP 100'
+	echo '统计不同响应状态码的出现次数和对应百分比'
+	echo '分别统计不同4XX状态码对应的TOP 10 URL和对应出现的总次数'
+	echo '给定url 指定url,给定URL输出TOP 100访问来源主机 '
+else 
+	cat web_log.tsv|awk -F'\t' '{if($5=="'$url'")print $1,$5}'|sort|uniq -c|sort -nr|head -n 100 >> web_cal_data.txt
+fi
 echo "处理完成"
