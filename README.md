@@ -30,3 +30,5 @@
 * 给定URL输出TOP 100访问来源主机
 
    __统计数据见web_cal_data.txt__
+   
+   __指定url为/images/ksclogo-medium.gif__
