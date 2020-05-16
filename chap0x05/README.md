@@ -1,7 +1,14 @@
 # chap0x05 web服务器
 ## 实验环境
 ubuntu18.04.4
+
 putty
+
+VreyNginx
+
+Wordpress
+
+DVWA
 ## 安装软件配置环境
 * 安装nginx
   ```
@@ -132,10 +139,15 @@ putty
         # 从WordPress密钥生成器中获取安全值
         curl -s https://api.wordpress.org/secret-key/1.1/salt/
       ```
-        将安全值复制到`/var/www/html/wp-config.php`中，并修改数据库的设置
-      - nginx配置
+
+
+      将安全值复制到`/var/www/html/wp-config.php`中，并修改数据库的设置
+    - nginx配置
+  
         改wp-config.php,更新数据库相关信息
+
         为wordpress创建配置文件/etc/nginx/sites-available/wp.sec.cuc.edu.cn
+
         创建软链接：`sudo ln -s /etc/nginx/sites-available/wp.sec.cuc.edu.cn /etc/nginx/sites-enabled/`
          ```
           # 在/etc/hosts中添加
@@ -188,7 +200,7 @@ putty
     - 配置matcher 
     - 配置Up Stream 
     - 配置Proxy Pass 
-使用Damn Vulnerable Web Application (DVWA)搭建的站点对外提供访问的地址为： http://dvwa.sec.cuc.edu.cn
+* 使用Damn Vulnerable Web Application (DVWA)搭建的站点对外提供访问的地址为： http://dvwa.sec.cuc.edu.cn
   + 改nginx的DVWA-http配置 
     - 设置监听端口为127.0.0.1:8081
   + 配置verynginx端口转发 
@@ -213,28 +225,51 @@ putty
  + 定制verynginx的访问控制策略规则 
    - 思路:禁止用户在非登录状态下访问wp-json 
    - 实现 
-   matcher 
-   response 
-   filter 
+   
+     matcher
+
+     response
+
+     filter 
   + 通过配置VeryNginx的Filter规则实现对Damn Vulnerable Web Application (DVWA)的SQL注入实验在低安全等级条件下进行防护
    - 思路:匹配请求参数中出现的union,select,order by等可能的sql注入语句字符串
    - 实现 
     将DVWA安全等级调整为low
-    matcher 
-    response 
-    filter 
+    
+     matcher
+
+     response
+
+     filter 
   + 测试: 
    - 启用filter之前，输入1' and 1=2 union select user(),database() -- 得到数据库用户及数据库名 
    - 启用filter之后 
-VeryNginx配置要求
-VeryNginx的Web管理页面仅允许白名单上的访客来源IP，其他来源的IP访问均向访客展示自定义的友好错误提示信息页面-3
-在ubuntu18.04的/etc/hosts文件下添加192.168.56.101 vn.sec.cuc.edu.cn 
-通过定制VeryNginx的访问控制策略规则实现： 
-限制DVWA站点的单IP访问速率为每秒请求数 < 50
-限制Wordpress站点的单IP访问速率为每秒请求数 < 20
-超过访问频率限制的请求直接返回自定义错误提示信息页面-4
-禁止curl访问
+* VeryNginx配置要求
+ + VeryNginx的Web管理页面仅允许白名单上的访客来源IP，其他来源的IP访问均向访客展示自定义的友好错误提示信息页面-3
+    - matcher 
+    - response 
+    - filter 
+    - 实验结果 在ubuntu18.04的/etc/hosts文件下添加192.168.56.101 vn.sec.cuc.edu.cn 
+  + 通过定制VeryNginx的访问控制策略规则实现： 
+   - 限制DVWA站点的单IP访问速率为每秒请求数 < 50
+   - 限制Wordpress站点的单IP访问速率为每秒请求数 < 20
+   - 超过访问频率限制的请求直接返回自定义错误提示信息页面-4
+     
+     frequency limit 
+     
+     response 
+     
+     测试 
+   - 禁止curl访问
+     
+     matcher
+
+     filter
+
+     实验结果
 ## 参考文献
 [linux-2019-luyj](https://github.com/CUCCS/linux-2019-luyj/blob/Linux_exp0x05/Linux_exp0x05/Linux_exp0x05.md)
+
 [How To Install WordPress with LEMP on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-lemp-on-ubuntu-18-04)
+
 [alexazhou/VeryNginx](https://github.com/alexazhou/VeryNginx)
