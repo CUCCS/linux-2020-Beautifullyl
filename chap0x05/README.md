@@ -193,14 +193,28 @@ DVWA
   ```
   mysql中新建用户名DVWA
   修改DVWA文件配置：`sudo sudo vim /var/www/html/DVWA/config/config.inc.php`
+  做出以下修改
+  ```
+  $_DVWA[ 'db_server' ]   = '127.0.0.1';
+  $_DVWA[ 'db_database' ] = 'dvwa';
+  $_DVWA[ 'db_user' ]     = 'dvwauser';
+  $_DVWA[ 'db_password' ] = 'p@ssw0rd';
+  ```
 
   修改php配置：`vim /etc/php/7.2/fpm/php.ini`
-
+  做出以下修改
+  ```
+  allow_url_include = On
+  allow_url_fopen = On
+  display_errors = Off
+  ```
   修改DVWA文件访问权限：`chown -R www-data.www-data /var/www/html/`
 
   为DVWA创建Nginx配置文件并添加服务模块:`sudo vim /etc/nginx/sites-avaliable/dvwa`
 
   创建软链接：`sudo ln -s /etc/nginx/sites-available/dvwa /etc/nginx/sites-enabled/`
+
+  在虚拟机的/etc/hosts中添加`ip dvwa.sec.cuc.edu.cn`
 
   重启nginx
   
@@ -249,26 +263,28 @@ DVWA
    
     ![dvwa不在白名单访问失败](img/dvwa不在白名单访问失败.png)
   + 在不升级Wordpress版本的情况下，通过定制VeryNginx的访问控制策略规则，热修复WordPress < 4.7.1 - Username Enumeration
-   - matcher
+    - matcher
    
-   ![name-enumeration添加matcher](img/name-enumeration添加matcher.png)
-   - filter
+    ![name-enumeration添加matcher](img/name-enumeration添加matcher.png)
+    - filter
    
-   ![name-enumeration添加filter](img/name-enumeration添加filter.png)
-   - 访问失败，返回404
+    ![name-enumeration添加filter](img/name-enumeration添加filter.png)
+    - 访问失败，返回404
+    
+    ![404](img\name-enumeration访问失败.PNG)
   + 通过配置VeryNginx的Filter规则实现对Damn Vulnerable Web Application (DVWA)的SQL注入实验在低安全等级条件下进行防护
-   - 思路:匹配请求参数中出现的union,select,order by等可能的sql注入语句字符串
-     matcher
+    - 思路:匹配请求参数中出现的union,select,order by等可能的sql注入语句字符串
+    - matcher
       
-      ![sql-matcher](img/sql-matcher.png)
-     response
+    ![sql-matcher](img/sql-matcher.png)
+    - response
       
-      ![sql-response](img/sql-response.png)
-     filter 
+    ![sql-response](img/sql-response.png)
+    - filter 
       
-      ![sql-filter](img/sql-filter.png)
+    ![sql-filter](img/sql-filter.png)
 * VeryNginx配置要求
- + VeryNginx的Web管理页面仅允许白名单上的访客来源IP，其他来源的IP访问均向访客展示自定义的友好错误提示信息页面-3
+  + VeryNginx的Web管理页面仅允许白名单上的访客来源IP，其他来源的IP访问均向访客展示自定义的友好错误提示信息页面-3
     - matcher 
     
     ![verynginx白名单添加matcher](img/verynginx白名单添加matcher.png)
@@ -279,16 +295,16 @@ DVWA
     
     ![verynginx白名单添加filter](img/verynginx白名单添加filter.png)
   + 通过定制VeryNginx的访问控制策略规则实现： 
-   - 限制DVWA站点的单IP访问速率为每秒请求数 < 50
-   - 限制Wordpress站点的单IP访问速率为每秒请求数 < 20
-   - 超过访问频率限制的请求直接返回自定义错误提示信息页面-4
+    - 限制DVWA站点的单IP访问速率为每秒请求数 < 50
+    - 限制Wordpress站点的单IP访问速率为每秒请求数 < 20
+    - 超过访问频率限制的请求直接返回自定义错误提示信息页面-4
      
-     frequency limit 
+       frequency limit 
      
-     ![frequencylimit](img/frequencylimit.png)
-     response 
+       ![frequencylimit](img/frequencylimit.png)
+       response 
      
-     ![frequencylimit-response](img/frequencylimit-response.png)
+       ![frequencylimit-response](img/frequencylimit-response.png)
 
    - 禁止curl访问
      
