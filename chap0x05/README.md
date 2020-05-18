@@ -103,7 +103,7 @@ DVWA
        usermod -aG sudo sammy
        ```   
         安装LEMP
-     - 2. 安装mysql
+     -  2.安装mysql
        ```
        sudo apt install mysql-server
        sudo mysql_secure_installation
@@ -231,23 +231,23 @@ DVWA
     ![ip不能访问filter](img/ip不能访问filter.png)
     - ip访问失败
     
-     ![ip访问失败](img/ip访问失败.png)
+    ![ip访问失败](img/ip访问失败.png)
   + Damn Vulnerable Web Application (DVWA)只允许白名单上的访客来源IP，其他来源的IP访问均向访客展示自定义的友好错误提示信息页面-2
-   - matcher 
+    - matcher 
    
-   ![dvwa白名单matcher](img/dvwa白名单matcher.png)
-   - response 
+    ![dvwa白名单matcher](img/dvwa白名单matcher.png)
+    - response 
    
-   ![dvwa白名单response](img/dvwa白名单response.png)
-   - filter 
+    ![dvwa白名单response](img/dvwa白名单response.png)
+    - filter 
    
-   ![dvwa白名单filter](img/dvwa白名单filter.png)
-   - dvwa白名单访问成功
+    ![dvwa白名单filter](img/dvwa白名单filter.png)
+    - dvwa白名单访问成功
    
-   ![dvwa白名单访问成功](img/dvwa白名单访问成功.png)
-   - dvwa不在白名单访问失败
+    ![dvwa白名单访问成功](img/dvwa白名单访问成功.png)
+    - dvwa不在白名单访问失败
    
-   ![dvwa不在白名单访问失败](img/dvwa不在白名单访问失败.png)
+    ![dvwa不在白名单访问失败](img/dvwa不在白名单访问失败.png)
   + 在不升级Wordpress版本的情况下，通过定制VeryNginx的访问控制策略规则，热修复WordPress < 4.7.1 - Username Enumeration
    - matcher
    
