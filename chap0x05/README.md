@@ -170,9 +170,13 @@ DVWA
 
          ```
          重启nginx
+
         浏览器中访问可安装wordpress
+         
          ![使用域名打开](img/使用域名打开.png)
+
          安装成功
+
          ![wordpress安装成功](img/wordpress安装成功.png)
       
 * 安装DVWA
@@ -201,6 +205,7 @@ DVWA
   重启nginx
   
   在本机通过域名访问成功
+  
   ![dvwa访问成功](img/dvwa访问成功.png)
 
 ## 基本要求实现
@@ -208,51 +213,70 @@ DVWA
 因为nginx 进程对 /opt/verynginx/verynginx/configs/ 无写权限
 * VeryNginx作为本次实验的Web App的反向代理服务器和WAF
   + matcher
+  
   ![verynginx配置matcher](img/verynginx配置matcher.png)
   + upstream proxy pass
+  
   ![verynginx配置upstreamproxypass](img/verynginx配置upstreamproxypass.png)
 * 安全加固要求
   + 使用IP地址方式均无法访问上述任意站点，并向访客展示自定义的友好错误提示信息页面-1
     - matcher 
+    
     ![ip不能访问matcher](img/ip不能访问matcher.png)
     - response 
+    
     ![ip不能访问response](img/ip不能访问response.png)
     - filter 
+    
     ![ip不能访问filter](img/ip不能访问filter.png)
     - ip访问失败
+    
      ![ip访问失败](img/ip访问失败.png)
   + Damn Vulnerable Web Application (DVWA)只允许白名单上的访客来源IP，其他来源的IP访问均向访客展示自定义的友好错误提示信息页面-2
    - matcher 
+   
    ![dvwa白名单matcher](img/dvwa白名单matcher.png)
    - response 
+   
    ![dvwa白名单response](img/dvwa白名单response.png)
    - filter 
+   
    ![dvwa白名单filter](img/dvwa白名单filter.png)
    - dvwa白名单访问成功
+   
    ![dvwa白名单访问成功](img/dvwa白名单访问成功.png)
    - dvwa不在白名单访问失败
+   
    ![dvwa不在白名单访问失败](img/dvwa不在白名单访问失败.png)
   + 在不升级Wordpress版本的情况下，通过定制VeryNginx的访问控制策略规则，热修复WordPress < 4.7.1 - Username Enumeration
    - matcher
+   
    ![name-enumeration添加matcher](img/name-enumeration添加matcher.png)
    - filter
+   
    ![name-enumeration添加filter](img/name-enumeration添加filter.png)
    - 访问失败，返回404
   + 通过配置VeryNginx的Filter规则实现对Damn Vulnerable Web Application (DVWA)的SQL注入实验在低安全等级条件下进行防护
    - 思路:匹配请求参数中出现的union,select,order by等可能的sql注入语句字符串
      matcher
+      
       ![sql-matcher](img/sql-matcher.png)
      response
+      
       ![sql-response](img/sql-response.png)
      filter 
+      
       ![sql-filter](img/sql-filter.png)
 * VeryNginx配置要求
  + VeryNginx的Web管理页面仅允许白名单上的访客来源IP，其他来源的IP访问均向访客展示自定义的友好错误提示信息页面-3
     - matcher 
+    
     ![verynginx白名单添加matcher](img/verynginx白名单添加matcher.png)
     - response 
+    
     ![verynginx白名单添加response](img/verynginx白名单添加response.png)
     - filter 
+    
     ![verynginx白名单添加filter](img/verynginx白名单添加filter.png)
   + 通过定制VeryNginx的访问控制策略规则实现： 
    - 限制DVWA站点的单IP访问速率为每秒请求数 < 50
@@ -260,20 +284,26 @@ DVWA
    - 超过访问频率限制的请求直接返回自定义错误提示信息页面-4
      
      frequency limit 
+     
      ![frequencylimit](img/frequencylimit.png)
      response 
+     
      ![frequencylimit-response](img/frequencylimit-response.png)
 
    - 禁止curl访问
      
      matcher
+     
      ![forbid-curl-matcher](img/forbid-curl-matcher.png)
      response
+     
      ![forbid-curl-response](img/forbid-curl-response.png)     
      filter
+     
      ![forbid-curl-filter](img/forbid-curl-filter.png)
 
      实验结果
+     
      ![curl失败](img/curl失败.png)
 ## 参考文献
 [linux-2019-luyj](https://github.com/CUCCS/linux-2019-luyj/blob/Linux_exp0x05/Linux_exp0x05/Linux_exp0x05.md)
