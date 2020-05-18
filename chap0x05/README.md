@@ -149,18 +149,53 @@ DVWA
         # -a标志用来维护权限
         sudo cp -a /tmp/wordpress/. /var/www/html/wq.sec.cuc.edu.cn
         #分配文件所有权至nginx运行的用户和组
-        sudo chown -R www-data:www-data /var/www/html/wq.sec.cuc.edu.cn
+        sudo chown -R www-data:www-data /var/www/html/wordpress
         # 从WordPress密钥生成器中获取安全值
         curl -s https://api.wordpress.org/secret-key/1.1/salt/
       ```
-      将安全值复制到`/var/www/html/wq.sec.cuc.edu.cn/wp-config.php`中，并修改数据库的设置
-    - nginx配置
+      将安全值复制到`/var/www/html/wordpress/wp-config.php`中，并修改数据库的设置
+    -  nginx配置
   
         改wp-config.php,更新数据库相关信息
 
-        为wordpress创建配置文件/etc/nginx/sites-available/wp.sec.cuc.edu.cn
+        为wordpress创建配置文件/etc/nginx/sites-available/wordpress
+        
+        如下：
+        ```
+        server {
+        listen 8080 ;
+        listen [::]:8080 ipv6only=on;
+        # SSL configuration
+        #
+        # listen 443 ssl default_server;
+        # listen [::]:443 ssl default_server;
+        #
+        # Note: You should disable gzip for SSL traffic.
+         root /var/www/html/wordpress;
 
-        创建软链接：`sudo ln -s /etc/nginx/sites-available/wp.sec.cuc.edu.cn /etc/nginx/sites-enabled/`
+        # Add index.php to the list if you are using PHP
+        index index.php index.html index.htm index.nginx-debian.html;
+
+        server_name wp.sec.cuc.edu.cn;
+
+        location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                        try_files $uri $uri/ =404;
+        }
+
+        # pass PHP scripts to FastCGI server
+        #
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+
+                # With php-fpm (or other unix sockets):
+                fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+        }
+
+        ```
+
+        创建软链接：`sudo ln -s /etc/nginx/sites-available/wordpress /etc/nginx/sites-enabled/`
          ```
           # 在/etc/hosts中添加
          ip wp.sec.cuc.edu.cn
@@ -211,6 +246,30 @@ DVWA
   修改DVWA文件访问权限：`chown -R www-data.www-data /var/www/html/`
 
   为DVWA创建Nginx配置文件并添加服务模块:`sudo vim /etc/nginx/sites-avaliable/dvwa`
+
+  如下：
+  ```
+  server {
+     listen 8081;
+     listen [::]:8081 ipv6only=on;
+
+     server_name dvwa.sec.cuc.edu.cn;
+
+     root /var/www/html/DVWA;
+     index index.html setup.php index.htm index.php index.nginx-debian.html;
+     location / {
+             try_files $uri $uri/ =404;
+       }
+     #..php-fpm....
+     location ~ \.php$ {
+             include snippets/fastcgi-php.conf;
+             fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+     }
+     location ~ /\.ht{
+
+                deny all;
+
+  ```
 
   创建软链接：`sudo ln -s /etc/nginx/sites-available/dvwa /etc/nginx/sites-enabled/`
 
