@@ -7,6 +7,8 @@ putty
 工作主机host-only:`192.168.56.103`
 
 目标主机host-only:`192.168.56.104`
+## shell文件build结果
+[shells仓库sh文件build-passing](https://travis-ci.com/github/Beautifullyl/shells)
 
 ## 工作主机免密SSH登录目标主机
 以下在工作主机：
