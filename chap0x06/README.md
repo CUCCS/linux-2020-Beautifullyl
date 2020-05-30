@@ -53,13 +53,14 @@ ssh root@192.168.56.104  bash vsftpd.sh
 ![在远程主机bash-vsftpd.sh](img/在远程主机bash-vsftpd.sh.png)
 
 3.访问ftp服务器成功
+
 ![访问ftp服务器成功](img/访问ftp服务器成功.png)
 
+### 实验任务
 + 配置一个提供匿名访问的FTP服务器，匿名访问者可以访问1个目录且仅拥有该目录及其所有子目录的只读访问权限；
   - 在vsftpd.userlist中添加anonymous，才可以实现匿名访问
   
   ![匿名访问ftp服务器成功](img/匿名访问ftp服务器成功.png)
-### 实验任务
 
 + 配置一个支持用户名和密码方式访问的账号，该账号继承匿名访问者所有权限，且拥有对另1个独立目录及其子目录完整读写（包括创建目录、修改文件、删除文件等）权限；
   - 用户访问ftp服务器成功
@@ -117,12 +118,14 @@ ssh root@192.168.56.104  bash vsftpd.sh
   - 共享目录中文件、子目录的属主、权限信息
 
     + server
+  
       ![目标主机共享目录信息](img/目标主机共享目录信息.png)
     + client 
+      
       ![工作主机共享目录信息](img/工作主机共享目录信息.png)
 
   - 上述共享目录中文件、子目录的属主、权限信息和在NFS服务器端上查看到的信息一样吗？无论是否一致，请给出你查到的资料是如何讲解NFS目录中的属主和属主组信息应该如何正确解读
-     + 客户端与服务器端一致的只是 uid 和 gid ，不同主机上的相同 uid 和 gid 并不意味着映射到相同的 用户名 和 组名
+     + 客户端与服务器端一致的只是uid和gid,不同主机上的相同uid和gid 并不意味着映射到相同的用户名和组名
 ### 参考资料
 [how to set up an nfs mount on ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-18-04)
 
